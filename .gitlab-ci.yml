@@ -4,6 +4,7 @@ variables:
   MAVEN_CLI_OPTS: "-B -Dbuild.number=${CI_PIPELINE_ID} -Dbuild.id=${CI_JOB_ID} -Dgit.branch=${CI_COMMIT_REF_NAME}"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true -Dhttps.protocols=TLSv1.2"
   DOCKER_REGISTRY: "nexusrepo.smart-consulting.ru"
+  JAR: "target/session-agent.jar"
 
 cache:
   paths:
