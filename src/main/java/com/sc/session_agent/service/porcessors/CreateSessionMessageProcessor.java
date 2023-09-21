@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateSessionMessageProcessorImpl implements ClientMessageProcessor<CreateSessionServerData, CreateSessionClientData> {
+public class CreateSessionMessageProcessor implements ClientMessageProcessor<CreateSessionServerData, CreateSessionClientData> {
     @Autowired
     private SessionHolder sessionHolder;
 
