@@ -1,4 +1,4 @@
 package com.sc.session_agent.model.session.client;
 
-public class ClientMessageData {
+public interface ClientMessageData {
 }

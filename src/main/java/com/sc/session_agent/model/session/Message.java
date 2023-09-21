@@ -1,23 +1,12 @@
 package com.sc.session_agent.model.session;
 
-public class Message {
-    private String errorMessage;
+import jakarta.validation.constraints.NotNull;
 
+public class Message {
+    @NotNull(message = "messageType required")
     private MessageType messageType;
 
-    public Message(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
     public Message() {
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
     }
 
     public MessageType getMessageType() {
