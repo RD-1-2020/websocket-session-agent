@@ -1,4 +1,4 @@
-package com.sc.session_agent.service;
+package com.sc.session_agent.service.porcessors;
 
 import com.sc.session_agent.model.session.MessageType;
 import com.sc.session_agent.model.session.client.ClientMessageData;

@@ -5,7 +5,7 @@ import com.sc.session_agent.model.session.client.ClientMessage;
 import com.sc.session_agent.model.session.client.ClientMessageData;
 import com.sc.session_agent.model.session.server.ServerMessage;
 import com.sc.session_agent.model.session.server.ServerMessageData;
-import com.sc.session_agent.service.ClientMessageProcessor;
+import com.sc.session_agent.service.porcessors.ClientMessageProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
