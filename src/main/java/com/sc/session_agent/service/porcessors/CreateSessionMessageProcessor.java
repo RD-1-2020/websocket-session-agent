@@ -13,16 +13,12 @@ public class CreateSessionMessageProcessor implements ClientMessageProcessor<Cre
     @Autowired
     private SessionHolder sessionHolder;
 
-    @Autowired
-    private MonitoringServerIntegration monitoringServerIntegration;
-
     @Override
     public CreateSessionServerData process(CreateSessionClientData message) {
         CreateSessionServerData serverData = new CreateSessionServerData();
 
-        String apiKey = monitoringServerIntegration.createApiKey(message.getMfcId(), message.getWindowId());
-        serverData.setApiKey(apiKey);
-        sessionHolder.updateActiveSessionKey(apiKey);
+        sessionHolder.updateActiveSessionKey(message.getMfcId(), message.getWindowId())
+        serverData.setApiKey(sessionHolder.getApiKey());
 
         return serverData;
     }

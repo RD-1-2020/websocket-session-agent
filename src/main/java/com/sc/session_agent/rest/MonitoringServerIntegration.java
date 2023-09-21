@@ -12,11 +12,14 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
+import static java.net.http.HttpResponse.BodyHandlers.ofString;
+
 @Service
 public class MonitoringServerIntegration {
     private final static Logger logger = LoggerFactory.getLogger(MonitoringServerIntegration.class);
 
     private final static String CREATE_API_KEY_API_TEMPLATE = "session/api/key/create?mfcId=%d&windowId=%d";
+    private final static String HEALTH_CHECK_API_TEMPLATE = "session/health/check?apiKey=%s";
 
     @Value("${remote.monitoring.server.url:}")
     private String monitoringServerUrl;
@@ -32,7 +35,7 @@ public class MonitoringServerIntegration {
                 .build();
 
         try {
-            HttpResponse<String> response = HttpClient.newBuilder().build().send(responseWithApiKey, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = HttpClient.newBuilder().build().send(responseWithApiKey, ofString());
 
             logger.info("ApiKey successfully revived!");
 
@@ -41,5 +44,24 @@ public class MonitoringServerIntegration {
             logger.error("In process get api key from server, something went wrong!", exception);
             return null;
         }
+    }
+
+    public Boolean healthCheck(String apiKey) throws Exception {
+        logger.info("Try send request for health check...");
+
+        URI requestUri = URI.create(String.format(monitoringServerUrl + HEALTH_CHECK_API_TEMPLATE, apiKey));
+        HttpRequest responseWithApiKey = HttpRequest
+                .newBuilder()
+                .uri(requestUri)
+                .timeout(Duration.of(10, ChronoUnit.SECONDS))
+                .build();
+
+
+        HttpResponse<String> response = HttpClient.newBuilder().build().send(responseWithApiKey, ofString());
+
+        String stringBody = response.body();
+        logger.info("Health check successfully received! Apikey valid state = {}", stringBody);
+
+        return Boolean.parseBoolean(stringBody);
     }
 }

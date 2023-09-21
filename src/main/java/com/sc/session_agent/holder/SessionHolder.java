@@ -1,5 +1,7 @@
 package com.sc.session_agent.holder;
 
+import com.sc.session_agent.model.session.server.HealthCheckServerData;
+import com.sc.session_agent.rest.MonitoringServerIntegration;
 import com.sc.session_agent.service.SessionFileService;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -17,6 +19,9 @@ public class SessionHolder {
     @Autowired
     private SessionFileService sessionFileService;
 
+    @Autowired
+    private MonitoringServerIntegration monitoringServerIntegration;
+
     @PostConstruct
     public void init() {
         logger.info("Try get api key from file on application start...");
@@ -26,12 +31,13 @@ public class SessionHolder {
         logger.info("Api key from session file successfully got!");
     }
 
-    public void updateActiveSessionKey(String apiKey) {
+    public void updateActiveSessionKey(Long mfcId, Long windowId) {
         logger.info("Try update api key...");
         if (StringUtils.hasText(apiKey)) {
             logger.warn("When try update key, old key is not blank!");
         }
 
+        String apiKey = monitoringServerIntegration.createApiKey(mfcId, windowId);
         this.apiKey = sessionFileService.rewriteApiKeyToFile(apiKey);
 
         logger.info("Api key successfully updated!");
@@ -39,5 +45,18 @@ public class SessionHolder {
 
     public String getApiKey() {
         return apiKey;
+    }
+
+    public HealthCheckServerData healthCheck() {
+        logger.info("Start try validate api key...");
+
+        HealthCheckServerData serverData = new HealthCheckServerData();
+        try {
+            serverData.setValid(monitoringServerIntegration.healthCheck(this.apiKey));
+        } catch (Exception exception) {
+            serverData.setServerAccessible(false);
+        }
+
+        return serverData;
     }
 }
