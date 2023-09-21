@@ -36,9 +36,7 @@
 * Session (**Output**) 
   * get - получить текущую сессию
   * create - создать новую сессию
-
-* Session (**Input**)
-  * dead - сессия мертва (то есть окно было удалено в админке СПС)
+  * healthCheck - сессия мертва (то есть окно было удалено в админке СПС)
 
 ## Логика хранения сессий
 При запуске PC поднимается настоящие приложение, после чего приложение при старте читает файл из конфиги **session.storage.file.path**
@@ -52,8 +50,6 @@
 ### Internal Config
 - session.storage.file.path=./session.data
   - Путь до файла для хранения сессии
-- session.health.check.cron=*/10 * * * ?
-  - Крон проверки валидности сессии
 
 ### Integration configs
 - remote.monitoring.server.url=http://192.168.141.185:8089/
@@ -62,3 +58,6 @@
 ### Native configs
 - server.port=443
   - порт на котором будет поднято приложение
+- logging.file.path=./socket.log - название файла лога
+- logging.logback.rollingpolicy.max-history=7 - за сколько дней хранить логи
+- logging.logback.rollingpolicy.total-size-cap=1GB - колличество хранимых логов
