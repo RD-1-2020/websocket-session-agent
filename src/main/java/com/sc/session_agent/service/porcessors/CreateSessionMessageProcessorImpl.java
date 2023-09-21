@@ -4,7 +4,7 @@ import com.sc.session_agent.holder.SessionHolder;
 import com.sc.session_agent.model.session.MessageType;
 import com.sc.session_agent.model.session.client.CreateSessionClientData;
 import com.sc.session_agent.model.session.server.CreateSessionServerData;
-import com.sc.session_agent.rest.SupportSectorIntegration;
+import com.sc.session_agent.rest.MonitoringServerIntegration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ public class CreateSessionMessageProcessorImpl implements ClientMessageProcessor
     private SessionHolder sessionHolder;
 
     @Autowired
-    private SupportSectorIntegration supportSectorIntegration;
+    private MonitoringServerIntegration monitoringServerIntegration;
 
     @Override
     public CreateSessionServerData process(CreateSessionClientData message) {
         CreateSessionServerData serverData = new CreateSessionServerData();
 
-        String apiKey = supportSectorIntegration.createApiKey(message.getMfcId(), message.getWindowId());
+        String apiKey = monitoringServerIntegration.createApiKey(message.getMfcId(), message.getWindowId());
         serverData.setApiKey(apiKey);
         sessionHolder.updateActiveSessionKey(apiKey);
 
