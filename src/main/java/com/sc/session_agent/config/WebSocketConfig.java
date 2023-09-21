@@ -11,15 +11,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/get/state");
-		config.enableSimpleBroker("/create/state");
-		config.enableSimpleBroker("/health/state");
+		config.enableSimpleBroker("/session/subject");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/session/create").withSockJS();
-		registry.addEndpoint("/session/get").withSockJS();
-		registry.addEndpoint("/session/health/check").withSockJS();
+		registry.addEndpoint("/session").withSockJS();
 	}
 }
