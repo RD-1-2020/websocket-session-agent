@@ -19,7 +19,7 @@ public class ServerMessageFactory {
 
         serverMessage.setMessageType(message.getMessageType());
         serverMessage.setData(processor.process(message.getData()));
-        serverMessage.setAuth(sessionHolder.isAuth());
+        serverMessage.setApiKey(sessionHolder.getApiKey());
 
         return serverMessage;
     }

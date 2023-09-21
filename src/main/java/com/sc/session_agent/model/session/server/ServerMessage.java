@@ -8,7 +8,7 @@ public class ServerMessage<T extends ServerMessageData> extends Message {
     private String errorMessage;
 
     private T data;
-    private boolean auth = false;
+    private String apiKey;
 
     public ServerMessage(Exception exception) {
         if (exception == null || !StringUtils.hasText(exception.getMessage())) {
@@ -38,11 +38,11 @@ public class ServerMessage<T extends ServerMessageData> extends Message {
         this.data = data;
     }
 
-    public boolean isAuth() {
-        return auth;
+    public String getApiKey() {
+        return apiKey;
     }
 
-    public void setAuth(boolean auth) {
-        this.auth = auth;
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 }

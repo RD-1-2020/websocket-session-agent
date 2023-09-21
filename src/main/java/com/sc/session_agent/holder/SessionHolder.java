@@ -1,6 +1,7 @@
 package com.sc.session_agent.holder;
 
 import com.sc.session_agent.service.SessionFileService;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,13 @@ public class SessionHolder {
     @Autowired
     private SessionFileService sessionFileService;
 
-    public boolean isAuth() {
-        return StringUtils.hasText(this.apiKey);
+    @PostConstruct
+    public void init() {
+        logger.info("Try get api key from file on application start...");
+
+        this.apiKey = sessionFileService.getApiKeyFromSessionFile();
+
+        logger.info("Api key from session file successfully got!");
     }
 
     public void updateActiveSessionKey(String apiKey) {
@@ -26,9 +32,12 @@ public class SessionHolder {
             logger.warn("When try update key, old key is not blank!");
         }
 
-        this.apiKey = apiKey;
-        sessionFileService.rewriteApiKeyToFile(apiKey);
+        this.apiKey = sessionFileService.rewriteApiKeyToFile(apiKey);
 
         logger.info("Api key successfully updated!");
+    }
+
+    public String getApiKey() {
+        return apiKey;
     }
 }
