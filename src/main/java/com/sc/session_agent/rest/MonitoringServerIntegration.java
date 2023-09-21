@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 public class MonitoringServerIntegration {
     private final static Logger logger = LoggerFactory.getLogger(MonitoringServerIntegration.class);
 
-    private final static String CREATE_API_KEY_API_TEMPLATE = "/api/key/create?mfcId=%d&windowId=%d";
+    private final static String CREATE_API_KEY_API_TEMPLATE = "session/api/key/create?mfcId=%d&windowId=%d";
 
     @Value("${remote.monitoring.server.url:}")
     private String monitoringServerUrl;
