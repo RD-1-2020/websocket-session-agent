@@ -4,7 +4,7 @@ import com.sc.session_agent.model.session.Message;
 import org.springframework.util.StringUtils;
 
 public class ServerMessage<T extends ServerMessageData> extends Message {
-    private static final String EXCEPTION_BLANK_MESSAGE = "Exception or exception message is blank. Connect with support psl.";
+    public static final String EXCEPTION_BLANK_MESSAGE = "Exception or exception message is blank. Connect with support!";
     private String errorMessage;
 
     private T data;
@@ -12,11 +12,11 @@ public class ServerMessage<T extends ServerMessageData> extends Message {
 
     public ServerMessage(Exception exception) {
         if (exception == null || !StringUtils.hasText(exception.getMessage())) {
-            this.errorMessage = EXCEPTION_BLANK_MESSAGE;
+            setErrorMessage(EXCEPTION_BLANK_MESSAGE);
             return;
         }
 
-        this.errorMessage = exception.getMessage();
+        setErrorMessage(exception.getMessage());
     }
 
     public ServerMessage() {

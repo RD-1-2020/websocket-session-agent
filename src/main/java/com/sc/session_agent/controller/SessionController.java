@@ -19,13 +19,13 @@ public class SessionController {
     private SessionMessageHandler sessionMessageHandler;
 
     @MessageMapping("/session")
-    @SendTo("/get/state")
-    public ServerMessage sessionEndpoint(@Valid ClientMessage message) {
+    @SendTo("/subject")
+    public ServerMessage<?> sessionEndpoint(@Valid ClientMessage<?> message) {
         try {
             return sessionMessageHandler.handle(message);
         } catch (Exception exception) {
             logger.error("Something went wrong in process get session!", exception);
-            return new ServerMessage(exception);
+            return new ServerMessage<>(exception);
         }
     }
 }

@@ -25,7 +25,7 @@ public class SessionFileService {
     public String rewriteApiKeyToFile(String apiKey) {
         logger.info("Try update api key in session file...");
 
-        File sessionFile = new File(authFilePath);
+        File sessionFile = getSessionFile();
         try {
             Files.deleteIfExists(sessionFile.toPath());
             sessionFile.createNewFile();
@@ -43,7 +43,7 @@ public class SessionFileService {
     public String getApiKeyFromSessionFile() {
         logger.info("Try get api key from session file...");
 
-        File sessionFile = new File(authFilePath);
+        File sessionFile = getSessionFile();
         if (!sessionFile.exists()) {
             logger.info("Session file is not exist, skip try get api key...");
             return null;
@@ -55,5 +55,9 @@ public class SessionFileService {
             logger.error("Something went wrong in process get api key from sessionFile!", exception);
             return null;
         }
+    }
+
+    private File getSessionFile() {
+        return new File(authFilePath);
     }
 }

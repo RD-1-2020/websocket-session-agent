@@ -1,7 +1,7 @@
 package com.sc.session_agent.holder;
 
 import com.sc.session_agent.model.session.server.HealthCheckServerData;
-import com.sc.session_agent.rest.MonitoringServerIntegration;
+import com.sc.session_agent.rest.integrations.MonitoringServerIntegration;
 import com.sc.session_agent.service.SessionFileService;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -43,10 +43,6 @@ public class SessionHolder {
         logger.info("Api key successfully updated!");
     }
 
-    public String getApiKey() {
-        return apiKey;
-    }
-
     public HealthCheckServerData healthCheck() {
         logger.info("Start try validate api key...");
 
@@ -58,5 +54,9 @@ public class SessionHolder {
         }
 
         return serverData;
+    }
+
+    public String getApiKey() {
+        return apiKey;
     }
 }
