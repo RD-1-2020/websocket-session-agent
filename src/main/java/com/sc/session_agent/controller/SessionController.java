@@ -18,8 +18,8 @@ public class SessionController {
     @Autowired
     private SessionMessageHandler sessionMessageHandler;
 
-    @MessageMapping("/session")
-    @SendTo("/subject")
+    @MessageMapping("/publish")
+    @SendTo("/subject/state")
     public ServerMessage<?> sessionEndpoint(@Valid ClientMessage<?> message) {
         try {
             return sessionMessageHandler.handle(message);
