@@ -10,14 +10,9 @@ public class SessionAgentApplicationTests {
 
     @Test
     public void testMainWhenArgsAreEmptyThenApplicationStartsSuccessfully() {
-        // Arrange
         String[] args = new String[]{};
 
-        // Act
         SessionAgentApplication.main(args);
-
-        // Assert
-        // No exceptions should be thrown, so no assertions are needed.
     }
 
     @Test

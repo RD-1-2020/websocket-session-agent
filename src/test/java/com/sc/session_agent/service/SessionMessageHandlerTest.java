@@ -48,23 +48,16 @@ public class SessionMessageHandlerTest {
 
     @Test
     public void testHandleWhenProcessorExistsThenReturnsCorrectServerMessage() {
-        // Arrange
         when(mockProcessor.getProcessorType()).thenReturn(MessageType.HEALTH_CHECK);
         when(serverMessageFactory.create(mockClientMessage, mockProcessor)).thenReturn(mockServerMessage);
 
-        // Act
         ServerMessage result = sessionMessageHandler.handle(mockClientMessage);
 
-        // Assert
         assertEquals(mockServerMessage, result);
     }
 
     @Test
     public void testHandleWhenNoProcessorExistsThenThrowsException() {
-        // Arrange
-        // No arrangement needed as the method doesn't have any dependencies
-
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> sessionMessageHandler.handle(mockClientMessage));
     }
 }

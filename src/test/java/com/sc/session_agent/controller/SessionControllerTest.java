@@ -29,27 +29,21 @@ public class SessionControllerTest {
 
     @Test
     public void testSessionEndpointWhenValidMessageThenReturnServerMessage() {
-        // Arrange
         when(sessionMessageHandler.handle(clientMessage)).thenReturn(serverMessage);
 
-        // Act
         ServerMessage<?> result = sessionController.sessionEndpoint(clientMessage);
 
-        // Assert
         assertEquals(serverMessage, result);
         verify(sessionMessageHandler, times(1)).handle(clientMessage);
     }
 
     @Test
     public void testSessionEndpointWhenExceptionThrownThenReturnServerMessageWithException() {
-        // Arrange
         Exception exception = new RuntimeException("Test exception");
         when(sessionMessageHandler.handle(clientMessage)).thenThrow(exception);
 
-        // Act
         ServerMessage<?> result = sessionController.sessionEndpoint(clientMessage);
 
-        // Assert
         assertEquals("Test exception", result.getErrorMessage());
         verify(sessionMessageHandler, times(1)).handle(clientMessage);
     }

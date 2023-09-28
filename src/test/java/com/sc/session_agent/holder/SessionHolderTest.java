@@ -43,88 +43,65 @@ public class SessionHolderTest {
 
     @Test
     public void testHealthCheckWhenCalledThenMonitoringServerIntegrationIsCalledWithCorrectArgument() throws Exception {
-        // Arrange
         when(monitoringServerIntegration.healthCheck(TEST_API_KEY)).thenReturn(true);
 
-        // Act
         sessionHolder.healthCheck();
 
-        // Assert
         verify(monitoringServerIntegration).healthCheck(TEST_API_KEY);
     }
 
     @Test
     public void testHealthCheckWhenMonitoringServerIntegrationThrowsExceptionThenServerAccessibleIsFalse() throws Exception {
-        // Arrange
         doThrow(new RuntimeException()).when(monitoringServerIntegration).healthCheck(TEST_API_KEY);
 
-        // Act
         HealthCheckServerData result = sessionHolder.healthCheck();
 
-        // Assert
         assertThat(result.isServerAccessible()).isFalse();
     }
 
     @Test
     public void testHealthCheckWhenApiKeyIsValidThenReturnValid() throws Exception {
-        // Arrange
         when(monitoringServerIntegration.healthCheck(TEST_API_KEY)).thenReturn(true);
 
-        // Act
         HealthCheckServerData result = sessionHolder.healthCheck();
 
-        // Assert
         assertThat(result.isValid()).isTrue();
         assertThat(result.isServerAccessible()).isTrue();
     }
 
     @Test
     public void testHealthCheckWhenApiKeyIsInvalidThenReturnServerNotAccessible() throws Exception {
-        // Arrange
         doThrow(new RuntimeException()).when(monitoringServerIntegration).healthCheck(TEST_API_KEY);
 
-        // Act
         HealthCheckServerData result = sessionHolder.healthCheck();
 
-        // Assert
         assertThat(result.isServerAccessible()).isFalse();
     }
 
     @Test
     public void testInitWhenCalledThenApiKeyIsInitialized() {
-        // Arrange
-        // No arrangement needed as the method doesn't have any dependencies
-
-        // Act
         sessionHolder.init();
 
-        // Assert
         assertThat(sessionHolder.getApiKey()).isEqualTo(TEST_API_KEY);
     }
 
     @Test
     public void testUpdateActiveSessionKeyWhenApiKeyNotBlank() {
-        // Arrange
         sessionHolder.init();
 
-        // Act
         sessionHolder.updateActiveSessionKey(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertThat(sessionHolder.getApiKey()).isEqualTo(TEST_API_KEY);
     }
 
     @Test
     public void testUpdateActiveSessionKeyWhenApiKeyBlank() {
-        // Arrange
         when(sessionFileService.getApiKeyFromSessionFile()).thenReturn("");
         when(monitoringServerIntegration.createApiKey(MFC_ID, WINDOW_ID)).thenReturn(TEST_API_KEY);
         sessionHolder.init();
 
-        // Act
         sessionHolder.updateActiveSessionKey(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertThat(sessionHolder.getApiKey()).isEqualTo(TEST_API_KEY);
     }
 }

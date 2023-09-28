@@ -39,7 +39,7 @@ public class MonitoringServerIntegrationTest {
 
     @InjectMocks
     private MonitoringServerIntegration monitoringServerIntegration;
-    
+
     @Mock
     private HttpRequest request;
 
@@ -54,26 +54,21 @@ public class MonitoringServerIntegrationTest {
 
     @Test
     public void testHealthCheckWhenHttpClientReturnsSuccessThenReturnsCorrectBoolean() throws Exception {
-        // Arrange
         when(monitoringServerRequestFactory.createHealthCheckRequest(TEST_API_KEY)).thenReturn(request);
         when(httpClient.send(request, HttpResponse.BodyHandlers.ofString())).thenReturn(response);
         when(response.body()).thenReturn(RESPONSE_BODY);
 
-        // Act
         Boolean actualResponse = monitoringServerIntegration.healthCheck(TEST_API_KEY);
 
-        // Assert
         verify(httpClient).send(request, HttpResponse.BodyHandlers.ofString());
         assertThat(actualResponse).isEqualTo(Boolean.parseBoolean(RESPONSE_BODY));
     }
 
     @Test
     public void testHealthCheckWhenHttpClientThrowsExceptionThenThrowsException() throws Exception {
-        // Arrange
         when(monitoringServerRequestFactory.createHealthCheckRequest(TEST_API_KEY)).thenReturn(request);
         when(httpClient.send(request, HttpResponse.BodyHandlers.ofString())).thenThrow(new RuntimeException("Error during health check"));
 
-        // Act & Assert
         assertThatThrownBy(() -> monitoringServerIntegration.healthCheck(TEST_API_KEY))
                 .isInstanceOf(Exception.class)
                 .hasMessageContaining("Error during health check");
@@ -97,53 +92,37 @@ public class MonitoringServerIntegrationTest {
 
     @Test
     public void testCreateApiKeyWhenMfcIdAndWindowIdValidThenReturnResponseBody() throws Exception {
-        // Arrange
-        // No arrangement needed as the method doesn't have any dependencies
-
-        // Act
         String actualResponse = monitoringServerIntegration.createApiKey(MFC_ID, WINDOW_ID);
 
-        // Assert
         verify(httpClient).send(request, HttpResponse.BodyHandlers.ofString());
         assertThat(actualResponse).isEqualTo(EXPECTED_RESPONSE);
     }
 
     @Test
     public void testCreateApiKeyWhenExceptionOccursThenReturnNull() throws Exception {
-        // Arrange
         when(monitoringServerRequestFactory.createApiKeyGenerateRequest(MFC_ID, WINDOW_ID)).thenReturn(request);
         when(httpClient.send(request, HttpResponse.BodyHandlers.ofString())).thenThrow(new RuntimeException());
 
-        // Act
         String actualResponse = monitoringServerIntegration.createApiKey(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertThat(actualResponse).isNull();
     }
 
     @Test
     public void testCreateApiKeyWhenValidIdsThenReturnsExpectedResponse() throws Exception {
-        // Arrange
-        // No arrangement needed as the method doesn't have any dependencies
-
-        // Act
         String actualResponse = monitoringServerIntegration.createApiKey(MFC_ID, WINDOW_ID);
 
-        // Assert
         verify(httpClient).send(request, HttpResponse.BodyHandlers.ofString());
         assertThat(actualResponse).isEqualTo(EXPECTED_RESPONSE);
     }
 
     @Test
     public void testCreateApiKeyWhenExceptionThenLogsErrorAndReturnsNull() throws Exception {
-        // Arrange
         when(monitoringServerRequestFactory.createApiKeyGenerateRequest(MFC_ID, WINDOW_ID)).thenReturn(request);
         when(httpClient.send(request, HttpResponse.BodyHandlers.ofString())).thenThrow(new RuntimeException());
 
-        // Act
         String actualResponse = monitoringServerIntegration.createApiKey(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertThat(actualResponse).isNull();
     }
 }

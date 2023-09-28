@@ -45,70 +45,54 @@ public class MonitoringServerRequestFactoryTest {
 
     @Test
     public void testCreateHealthCheckRequestWhenApiKeyProvidedThenReturnsHttpRequestWithCorrectUriAndTimeout() {
-        // Arrange
         when(uriUtils.create(any(), any())).thenReturn(EXPECTED_URI_HEALTH_CHECK);
 
-        // Act
         HttpRequest result = monitoringServerRequestFactory.createHealthCheckRequest(API_KEY);
 
-        // Assert
         assertEquals(EXPECTED_URI_HEALTH_CHECK, result.uri());
         assertEquals(TIMEOUT, result.timeout().get());
     }
 
     @Test
     public void testCreateHealthCheckRequestWhenApiKeyIsNullThenThrowsException() {
-        // Arrange
         when(uriUtils.create(any(), any())).thenReturn(null);
 
-        // Act & Assert
         assertThrows(NullPointerException.class, () -> monitoringServerRequestFactory.createHealthCheckRequest(null));
     }
 
     @Test
     public void testCreateApiKeyGenerateRequestWhenGivenMfcIdAndWindowIdThenHttpRequestIsCorrectlyBuilt() {
-        // Arrange
         when(uriUtils.create(any(), any(), any())).thenReturn(EXPECTED_URI_CREATE);
 
-        // Act
         HttpRequest result = monitoringServerRequestFactory.createApiKeyGenerateRequest(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertEquals(EXPECTED_URI_CREATE, result.uri());
         assertEquals(TIMEOUT, result.timeout().get());
     }
 
     @Test
     public void testCreateApiKeyGenerateRequestWhenUriUtilsCreateThrowsExceptionThenExceptionIsPropagated() {
-        // Arrange
         when(uriUtils.create(any(), any(), any())).thenReturn(null);
 
-        // Act & Assert
         assertThrows(NullPointerException.class, () -> monitoringServerRequestFactory.createApiKeyGenerateRequest(MFC_ID, WINDOW_ID));
     }
 
     @Test
     public void testCreateApiKeyGenerateRequestWhenMfcIdAndWindowIdProvidedThenHttpRequestCreated() {
-        // Arrange
         when(uriUtils.create(any(), any(), any())).thenReturn(EXPECTED_URI_CREATE);
 
-        // Act
         HttpRequest result = monitoringServerRequestFactory.createApiKeyGenerateRequest(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertEquals(EXPECTED_URI_CREATE, result.uri());
         assertEquals(TIMEOUT, result.timeout().get());
     }
 
     @Test
     public void testCreateApiKeyGenerateRequestWhenMfcIdOrWindowIdIsNullThenHttpRequestCreated() {
-        // Arrange
         when(uriUtils.create(any(), any(), any())).thenReturn(EXPECTED_URI_CREATE);
 
-        // Act
         HttpRequest result = monitoringServerRequestFactory.createApiKeyGenerateRequest(MFC_ID, WINDOW_ID);
 
-        // Assert
         assertEquals(EXPECTED_URI_CREATE, result.uri());
         assertEquals(TIMEOUT, result.timeout().get());
     }

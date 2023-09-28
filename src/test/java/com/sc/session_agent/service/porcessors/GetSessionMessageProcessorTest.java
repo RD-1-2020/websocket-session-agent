@@ -27,26 +27,20 @@ public class GetSessionMessageProcessorTest {
 
     @Test
     public void testProcessWhenCalledThenApiKeyIsSet() {
-        // Arrange
         String expectedApiKey = "testApiKey";
         when(sessionHolder.getApiKey()).thenReturn(expectedApiKey);
 
-        // Act
         GetSessionServerData result = getSessionMessageProcessor.process(getSessionClientData);
 
-        // Assert
         assertThat(result.getApiKey()).isEqualTo(expectedApiKey);
     }
 
     @Test
     public void testGetProcessorTypeReturnsGet() {
-        // Arrange
         MessageType expectedType = MessageType.GET;
 
-        // Act
         MessageType result = getSessionMessageProcessor.getProcessorType();
 
-        // Assert
         assertThat(result).isEqualTo(expectedType);
     }
 }

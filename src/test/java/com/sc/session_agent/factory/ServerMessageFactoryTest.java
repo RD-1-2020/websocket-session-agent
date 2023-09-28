@@ -41,16 +41,13 @@ public class ServerMessageFactoryTest {
 
     @Test
     public void testCreateWhenGivenClientMessageAndProcessorThenReturnsCorrectServerMessage() {
-        // Arrange
         when(clientMessage.getData()).thenReturn(healthCheckClientData);
         when(clientMessage.getMessageType()).thenReturn(MessageType.GET);
         when(clientMessageProcessor.process(clientMessage.getData())).thenReturn(healthCheckServerData);
         when(sessionHolder.getApiKey()).thenReturn(API_KEY);
 
-        // Act
         ServerMessage serverMessage = serverMessageFactory.create(clientMessage, clientMessageProcessor);
 
-        // Assert
         assertThat(serverMessage.getMessageType()).isEqualTo(clientMessage.getMessageType());
         assertThat(serverMessage.getData()).isEqualTo(healthCheckServerData);
         assertThat(serverMessage.getApiKey()).isEqualTo(API_KEY);
