@@ -1,6 +1,6 @@
 package com.sc.session_agent.model.session.server;
 
-public class HealthCheckServerData implements ServerMessageData {
+public class HealthCheckServerData extends ServerMessageData {
     private boolean valid = true;
     private boolean serverAccessible = true;
 

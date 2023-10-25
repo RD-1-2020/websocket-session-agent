@@ -2,7 +2,6 @@
 package com.sc.session_agent.factory;
 
 import com.sc.session_agent.holder.SessionHolder;
-import com.sc.session_agent.model.session.MessageType;
 import com.sc.session_agent.model.session.client.ClientMessage;
 import com.sc.session_agent.model.session.client.HealthCheckClientData;
 import com.sc.session_agent.model.session.server.HealthCheckServerData;
@@ -42,13 +41,11 @@ public class ServerMessageFactoryTest {
     @Test
     public void testCreateWhenGivenClientMessageAndProcessorThenReturnsCorrectServerMessage() {
         when(clientMessage.getData()).thenReturn(healthCheckClientData);
-        when(clientMessage.getMessageType()).thenReturn(MessageType.GET);
         when(clientMessageProcessor.process(clientMessage.getData())).thenReturn(healthCheckServerData);
         when(sessionHolder.getApiKey()).thenReturn(API_KEY);
 
         ServerMessage serverMessage = serverMessageFactory.create(clientMessage, clientMessageProcessor);
 
-        assertThat(serverMessage.getMessageType()).isEqualTo(clientMessage.getMessageType());
         assertThat(serverMessage.getData()).isEqualTo(healthCheckServerData);
         assertThat(serverMessage.getApiKey()).isEqualTo(API_KEY);
     }

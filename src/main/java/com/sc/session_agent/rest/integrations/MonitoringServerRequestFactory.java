@@ -24,6 +24,7 @@ public class MonitoringServerRequestFactory {
     public HttpRequest createApiKeyGenerateRequest(Long mfcId, Long windowId) {
         return HttpRequest
                 .newBuilder()
+                .method("GET", HttpRequest.BodyPublishers.noBody())
                 .uri(uriUtils.create(monitoringServerUrl + CREATE_API_KEY_API_TEMPLATE, mfcId, windowId))
                 .timeout(TIMEOUT)
                 .build();
@@ -32,6 +33,7 @@ public class MonitoringServerRequestFactory {
     public HttpRequest createHealthCheckRequest(String apiKey) {
         return HttpRequest
                 .newBuilder()
+                .method("GET", HttpRequest.BodyPublishers.noBody())
                 .uri(uriUtils.create(monitoringServerUrl + HEALTH_CHECK_API_TEMPLATE, apiKey))
                 .timeout(TIMEOUT)
                 .build();

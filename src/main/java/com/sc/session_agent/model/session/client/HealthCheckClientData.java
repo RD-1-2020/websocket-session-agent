@@ -1,4 +1,7 @@
 package com.sc.session_agent.model.session.client;
 
-public class HealthCheckClientData implements ClientMessageData {
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("healthCheckClientData")
+public class HealthCheckClientData extends ClientMessageData {
 }

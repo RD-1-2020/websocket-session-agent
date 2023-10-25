@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import static org.apache.logging.log4j.util.Strings.EMPTY;
+
 @Service
 public class SessionHolder {
     private final static Logger logger = LoggerFactory.getLogger(SessionHolder.class);
@@ -49,6 +51,11 @@ public class SessionHolder {
         HealthCheckServerData serverData = new HealthCheckServerData();
         try {
             serverData.setValid(monitoringServerIntegration.healthCheck(this.apiKey));
+
+            if (!serverData.isValid()) {
+                sessionFileService.rewriteApiKeyToFile(EMPTY);
+                apiKey = null;
+            }
         } catch (Exception exception) {
             serverData.setServerAccessible(false);
         }

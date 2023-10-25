@@ -1,7 +1,9 @@
 package com.sc.session_agent.controller;
 
 import com.sc.session_agent.model.session.client.ClientMessage;
+import com.sc.session_agent.model.session.client.ClientMessageData;
 import com.sc.session_agent.model.session.server.ServerMessage;
+import com.sc.session_agent.model.session.server.ServerMessageData;
 import com.sc.session_agent.service.SessionMessageHandler;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class SessionController {
@@ -20,7 +23,7 @@ public class SessionController {
 
     @MessageMapping("/ws")
     @SendTo("/subject/state")
-    public ServerMessage<?> sessionEndpoint(@Valid ClientMessage<?> message) {
+    public <T extends ServerMessageData, S extends ClientMessageData> ServerMessage<T> sessionEndpoint(@Valid @RequestBody ClientMessage<S> message) {
         try {
             return sessionMessageHandler.handle(message);
         } catch (Exception exception) {

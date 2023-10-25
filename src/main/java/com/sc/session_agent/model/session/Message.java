@@ -2,7 +2,9 @@ package com.sc.session_agent.model.session;
 
 import jakarta.validation.constraints.NotNull;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     @NotNull(message = "messageType required")
     private MessageType messageType;
 

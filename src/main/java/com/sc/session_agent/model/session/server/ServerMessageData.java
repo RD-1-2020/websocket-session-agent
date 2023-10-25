@@ -1,4 +1,9 @@
 package com.sc.session_agent.model.session.server;
 
-public interface ServerMessageData {
+import java.io.Serializable;
+
+
+public abstract class ServerMessageData implements Serializable {
+
+    public ServerMessageData() {}
 }

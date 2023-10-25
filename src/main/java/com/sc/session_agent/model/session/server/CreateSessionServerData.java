@@ -1,6 +1,6 @@
 package com.sc.session_agent.model.session.server;
 
-public class CreateSessionServerData implements ServerMessageData {
+public class CreateSessionServerData extends ServerMessageData {
     private String apiKey;
 
     public String getApiKey() {

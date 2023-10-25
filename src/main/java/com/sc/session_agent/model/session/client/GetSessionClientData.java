@@ -1,4 +1,7 @@
 package com.sc.session_agent.model.session.client;
 
-public class GetSessionClientData implements ClientMessageData {
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("getSessionClientData")
+public class GetSessionClientData extends ClientMessageData {
 }
