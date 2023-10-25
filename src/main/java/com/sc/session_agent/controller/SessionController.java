@@ -18,7 +18,7 @@ public class SessionController {
     @Autowired
     private SessionMessageHandler sessionMessageHandler;
 
-    @MessageMapping("/publish")
+    @MessageMapping("/ws")
     @SendTo("/subject/state")
     public ServerMessage<?> sessionEndpoint(@Valid ClientMessage<?> message) {
         try {
